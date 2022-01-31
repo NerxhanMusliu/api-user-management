@@ -12,6 +12,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserGuard } from '../common/guards/create-user.guard';
+import { Public } from '../common/decorators/public.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -45,5 +46,20 @@ export class UsersController {
   @UseGuards(CreateUserGuard)
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
+  }
+
+  @Post('super-admin')
+  @Public()
+  createSuperAdmin() {
+    const adminData = {
+      firstName: 'Super',
+      lastName: 'Admin',
+      email: 'super-admin@gmail.com',
+      password: '123456',
+      role: 'super-admin',
+      organizationId: [],
+      teamId: [],
+    };
+    return this.usersService.create(adminData);
   }
 }
