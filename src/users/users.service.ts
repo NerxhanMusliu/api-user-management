@@ -24,29 +24,38 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    const user = await this.userModel.findOne({ _id: id }).exec();
-    if (!user) {
-      throw new NotFoundException(`User with #${id} not found`);
-    }
-    return user;
+    return await this.getById(id);
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    const existingUser = await this.userModel
-      .findOneAndUpdate({ _id: id }, { $set: updateUserDto }, { new: true })
-      .exec();
+    try {
+      const existingUser = await this.userModel
+        .findOneAndUpdate({ _id: id }, { $set: updateUserDto }, { new: true })
+        .exec();
 
-    if (!existingUser) {
+      if (!existingUser) {
+        throw new NotFoundException(`User with #${id} not found`);
+      }
+      return existingUser;
+    } catch {
       throw new NotFoundException(`User with #${id} not found`);
     }
-    return existingUser;
   }
 
   async remove(id: string) {
-    const user = await this.userModel.findOne({ _id: id }).exec();
-    if (!user) {
+    const user = await this.getById(id);
+    return user.remove();
+  }
+
+  private async getById(id: string) {
+    try {
+      const user = await this.userModel.findOne({ _id: id }).exec();
+      if (!user) {
+        throw new NotFoundException(`User with #${id} not found`);
+      }
+      return user;
+    } catch {
       throw new NotFoundException(`User with #${id} not found`);
     }
-    return user.remove();
   }
 }

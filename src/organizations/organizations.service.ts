@@ -22,37 +22,44 @@ export class OrganizationsService {
   }
 
   async findOne(id: string) {
-    const organization = await this.organizationModel
-      .findOne({ _id: id })
-      .exec();
-    if (!organization) {
-      throw new NotFoundException(`Organization with #${id} not found`);
-    }
-    return organization;
+    return await this.getById(id);
   }
 
   async update(id: string, updateOrganizationDto: UpdateOrganizationDto) {
-    const existingOrganization = await this.organizationModel
-      .findOneAndUpdate(
-        { _id: id },
-        { $set: updateOrganizationDto },
-        { new: true },
-      )
-      .exec();
+    try {
+      const existingOrganization = await this.organizationModel
+        .findOneAndUpdate(
+          { _id: id },
+          { $set: updateOrganizationDto },
+          { new: true },
+        )
+        .exec();
 
-    if (!existingOrganization) {
+      if (!existingOrganization) {
+        throw new NotFoundException(`Organization with #${id} not found`);
+      }
+      return existingOrganization;
+    } catch {
       throw new NotFoundException(`Organization with #${id} not found`);
     }
-    return existingOrganization;
   }
 
   async remove(id: string) {
-    const organization = await this.organizationModel
-      .findOne({ _id: id })
-      .exec();
-    if (!organization) {
+    const organization = await this.getById(id);
+    return organization.remove();
+  }
+
+  private async getById(id: string) {
+    try {
+      const organization = await this.organizationModel
+        .findOne({ _id: id })
+        .exec();
+      if (!organization) {
+        throw new NotFoundException(`Organization with #${id} not found`);
+      }
+      return organization;
+    } catch {
       throw new NotFoundException(`Organization with #${id} not found`);
     }
-    return organization.remove();
   }
 }
