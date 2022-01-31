@@ -13,6 +13,8 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
+    // check the role
+
     const salt = await bcrypt.genSalt();
     const user = new this.userModel(createUserDto);
     user.password = await bcrypt.hash(createUserDto.password, salt);
