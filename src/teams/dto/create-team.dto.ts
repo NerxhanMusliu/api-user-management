@@ -7,4 +7,8 @@ export class CreateTeamDto {
   @IsString()
   @IsOptional()
   description: string;
+
+  @IsString()
+  @IsOptional()
+  readonly userId: string[];
 }

@@ -20,7 +20,7 @@ export class UsersService {
   }
 
   findAll() {
-    return this.userModel.find().exec();
+    return this.userModel.find().populate(['organizationId', 'teamId']).exec();
   }
 
   async findOne(id: string) {
@@ -31,7 +31,7 @@ export class UsersService {
     try {
       const existingUser = await this.userModel
         .findOneAndUpdate({ _id: id }, { $set: updateUserDto }, { new: true })
-        .exec();
+        .populate(['organizationId', 'teamId']);
 
       if (!existingUser) {
         throw new NotFoundException(`User with #${id} not found`);
@@ -49,7 +49,10 @@ export class UsersService {
 
   private async getById(id: string) {
     try {
-      const user = await this.userModel.findOne({ _id: id }).exec();
+      const user = await this.userModel
+        .findOne({ _id: id })
+        .populate(['organizationId', 'teamId'])
+        .exec();
       if (!user) {
         throw new NotFoundException(`User with #${id} not found`);
       }

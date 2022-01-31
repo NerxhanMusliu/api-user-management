@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -15,4 +15,12 @@ export class CreateUserDto {
 
   @IsString()
   readonly role: string;
+
+  @IsString()
+  @IsOptional()
+  readonly organizationId: string[];
+
+  @IsString()
+  @IsOptional()
+  readonly teamId: string[];
 }

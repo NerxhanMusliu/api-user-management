@@ -7,4 +7,8 @@ export class CreateOrganizationDto {
   @IsString()
   @IsOptional()
   description: string;
+
+  @IsString()
+  @IsOptional()
+  readonly userId: string[];
 }
