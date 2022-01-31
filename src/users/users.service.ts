@@ -44,6 +44,9 @@ export class UsersService {
 
   async remove(id: string) {
     const user = await this.userModel.findOne({ _id: id }).exec();
+    if (!user) {
+      throw new NotFoundException(`User with #${id} not found`);
+    }
     return user.remove();
   }
 }
