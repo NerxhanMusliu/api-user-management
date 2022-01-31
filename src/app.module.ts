@@ -11,7 +11,7 @@ import { ProjectsModule } from './projects/projects.module';
   imports: [
     UsersModule,
     OrganizationsModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/user-managment'),
+    MongooseModule.forRoot('mongodb://localhost:27017/user-management'),
     TeamsModule,
     ProjectsModule,
   ],

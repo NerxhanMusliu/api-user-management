@@ -7,4 +7,4 @@ services:
     ports:
       - 27017:27017
     environment:
-      MONGODB_DATABASE: user-managment
+      MONGODB_DATABASE: user-management
