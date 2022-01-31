@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './users/users.module';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { TeamsModule } from './teams/teams.module';
+import { ProjectsModule } from './projects/projects.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { TeamsModule } from './teams/teams.module';
     OrganizationsModule,
     MongooseModule.forRoot('mongodb://localhost:27017/user-managment'),
     TeamsModule,
+    ProjectsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
