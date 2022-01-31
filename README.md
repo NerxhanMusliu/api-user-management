@@ -10,7 +10,7 @@ This is a user management API developed based on [Nest](https://github.com/nestj
 $ npm install
 ```
 
-### Before running the app, run this docker command
+### Before running the app, run this docker command (Make sure that docker is running on your computer)
 
 ```bash
 docker-compose up
