@@ -47,6 +47,15 @@ export class UsersService {
     return user.remove();
   }
 
+  async findByEmail(username: string) {
+    const user = await this.userModel.findOne({ email: username }).exec();
+    if (!user) {
+      return false;
+    } else {
+      return user;
+    }
+  }
+
   private async getById(id: string) {
     try {
       const user = await this.userModel
