@@ -7,4 +7,7 @@ export class CreateProjectDto {
   @IsString()
   @IsOptional()
   description: string;
+
+  @IsString()
+  readonly teamId: string;
 }

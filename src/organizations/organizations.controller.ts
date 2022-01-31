@@ -6,31 +6,37 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { OrganizationsService } from './organizations.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
+import { CreateOrganizationGuard } from '../common/guards/create-organization.guard';
 
 @Controller('organizations')
 export class OrganizationsController {
   constructor(private readonly organizationsService: OrganizationsService) {}
 
   @Post()
+  @UseGuards(CreateOrganizationGuard)
   create(@Body() createOrganizationDto: CreateOrganizationDto) {
     return this.organizationsService.create(createOrganizationDto);
   }
 
   @Get()
+  @UseGuards(CreateOrganizationGuard)
   findAll() {
     return this.organizationsService.findAll();
   }
 
   @Get(':id')
+  @UseGuards(CreateOrganizationGuard)
   findOne(@Param('id') id: string) {
     return this.organizationsService.findOne(id);
   }
 
   @Patch(':id')
+  @UseGuards(CreateOrganizationGuard)
   update(
     @Param('id') id: string,
     @Body() updateOrganizationDto: UpdateOrganizationDto,
@@ -39,6 +45,7 @@ export class OrganizationsController {
   }
 
   @Delete(':id')
+  @UseGuards(CreateOrganizationGuard)
   remove(@Param('id') id: string) {
     return this.organizationsService.remove(id);
   }
