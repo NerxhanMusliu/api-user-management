@@ -3,6 +3,7 @@ import { Document } from 'mongoose';
 import { Organization } from '../../organizations/entities/organization.entity';
 import * as mongoose from 'mongoose';
 import { Team } from '../../teams/entities/team.entity';
+import { UserRoleTypesEnum } from '../enums/users.enum';
 
 @Schema()
 export class User extends Document {
@@ -19,7 +20,7 @@ export class User extends Document {
   password: string;
 
   @Prop()
-  role: string;
+  role: UserRoleTypesEnum;
 
   @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Organization' }])
   organizationId: Organization;
